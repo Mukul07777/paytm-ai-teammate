@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Company — Dost</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%23012A72'/><text x='16' y='22' font-size='17' font-family='Arial' font-weight='700' fill='white' text-anchor='middle'>D</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+</head>
+<body data-page="company">
+
+<section class="hero">
+  <div class="mesh"><span></span><span></span><span></span></div><div class="gridbg"></div>
+  <div class="wrap">
+    <div class="rv"><span class="eyebrow"><b>Our story</b> Why we built Dost</span></div>
+    <h1 class="rv d1">Every merchant deserves <span class="serif grad">a dost.</span></h1>
+    <p class="lead rv d2">“Dost” means friend. The kirana owner, the tiffin centre, the boutique down the road — they don't need another app. They need someone on their side who notices, cares, and gets things done.</p>
+  </div>
+</section>
+
+<section class="sec tint">
+  <div class="wrap">
+    <div class="bento">
+      <div class="tile s3 rv"><div class="ic c-cyan">🌏</div><h3>Built for Bharat</h3><p>Designed for merchants who speak many languages, run on thin margins, and can't afford a day without payments.</p></div>
+      <div class="tile s3 rv d1"><div class="ic c-violet">🤝</div><h3>Made to work with people</h3><p>Dost doesn't replace support and sales teams. It takes the routine work so they can focus on the moments that need a human touch.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="demo">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 1.1fr;gap:60px;align-items:start" class="demo-grid">
+      <div class="rv">
+        <div class="kicker">Get in touch</div>
+        <h2 class="h2">Let's put Dost <span class="serif">on your team.</span></h2>
+        <p class="p">Tell us a little about your team and we'll walk you through Dost on your own scenarios.</p>
+      </div>
+      <form class="panel form rv d1" id="demoForm">
+        <div class="row"><div class="field"><label>Your name</label><input name="name" required></div><div class="field"><label>Work email</label><input name="email" type="email" required></div></div>
+        <div class="row"><div class="field"><label>Company</label><input name="company"></div>
+          <div class="field"><label>Team</label><select name="team"><option>Merchant support</option><option>Merchant sales</option><option>Risk & compliance</option><option>Product</option><option>Other</option></select></div></div>
+        <div class="field"><label>What would you like Dost to handle?</label><textarea name="message" placeholder="e.g. Device outages and failed settlements for our merchants"></textarea></div>
+        <button class="btn dark lg" type="submit">Request a demo <span class="arr">→</span></button>
+        <p id="demoMsg" style="font-size:14px;color:var(--ink2)"></p>
+      </form>
+    </div>
+  </div>
+</section>
+<style>@media (max-width:1000px){.demo-grid{grid-template-columns:1fr!important}}</style>
+<script src="/js/site.js"></script>
+<script>
+document.getElementById('demoForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = e.target, msg = document.getElementById('demoMsg'), body = Object.fromEntries(new FormData(f));
+  try {
+    const r = await fetch('/api/demo-requests', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const j = await r.json(); if (!r.ok) throw new Error(j.error);
+    f.reset(); msg.style.color = '#067647'; msg.textContent = `Thanks ${body.name.split(' ')[0]} — we'll be in touch shortly.`;
+  } catch (err) { msg.style.color = '#B42318'; msg.textContent = err.message || 'Something went wrong. Please try again.'; }
+});
+</script>
+</body>
+</html>
